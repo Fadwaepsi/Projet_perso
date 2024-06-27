@@ -45,6 +45,24 @@ def get_sunrise_sunset(city, api_key):
     
     return None, None
 
+# Récupérer la phase de la lune pour la ville spécifiée.
+def get_moon_phases(city, api_key):
+    url = f"http://api.weatherapi.com/v1/astronomy.json?key={api_key}&q={city}"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        astronomy_data = data.get("astronomy", {})
+        
+        if astronomy_data:
+            moon_phase = astronomy_data["astro"]["moon_phase"]
+            sauvegarder_heures_soleil({"moon_phase": moon_phase}, "moon_phases.json")
+            return moon_phase
+    else:
+        print(f"Erreur lors de la récupération des données astronomiques: {response.status_code}")
+    
+    return None
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     sunrise = None

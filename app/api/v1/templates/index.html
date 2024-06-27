@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Météo - Lever et coucher du soleil</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Données Astronomiques</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Météo - Lever et coucher du soleil</h1>
-        <form method="POST">
-            <input type="text" name="city" placeholder="Entrez le nom de la ville" required>
-            <button type="submit">Obtenir les heures</button>
-        </form>
-        {% if error_message %}
-            <p>Error: {{ error_message }}</p>
-        {% elif sunrise and sunset %}
-            <h2>Ville: {{ city }}</h2>
-            <p>Heure du lever du soleil: {{ sunrise }}</p>
-            <p>Heure du coucher du soleil: {{ sunset }}</p>
-        {% endif %}
-    </div>
+    <h1>Données Astronomiques pour {{ city }}</h1>
+    {% if sunrise and sunset %}
+        <p>Lever du soleil : {{ sunrise }}</p>
+        <p>Coucher du soleil : {{ sunset }}</p>
+    {% endif %}
+    {% if moon_phase %}
+        <p>Phase de la lune : {{ moon_phase }}</p>
+    {% endif %}
+    <form method="post">
+        <label for="city">Ville :</label>
+        <input type="text" id="city" name="city">
+        <button type="submit">Rechercher</button>
+    </form>
 </body>
 </html>
